@@ -1,6 +1,4 @@
 import type { ExtensionFactory, ExtensionFactoryApi } from "./types/host";
-import { createExamplePage } from "./pages/example-page";
-import { createSettingsPage } from "./pages/settings-page";
 import { createHomeTodoWidget } from "./widgets/home-todo";
 
 (function registerExampleExtension(factory: ExtensionFactory) {
@@ -18,19 +16,5 @@ import { createHomeTodoWidget } from "./widgets/home-todo";
 })(function createExtension(api: ExtensionFactoryApi) {
   return {
     homeWidgets: createHomeTodoWidget(api).homeWidgets,
-    settingsPage: {
-      Component: createSettingsPage(api),
-    },
-    pages: [
-      {
-        routePath: "example",
-        Component: createExamplePage(api, false),
-      },
-      {
-        routePath: "example-standalone",
-        isStandAlone: true,
-        Component: createExamplePage(api, true),
-      },
-    ],
   };
 });
