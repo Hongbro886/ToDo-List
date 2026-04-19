@@ -45,6 +45,7 @@ export function createHomeTodoWidget(api: ExtensionFactoryApi) {
         null,
         React.createElement(Input, {
           size: "sm",
+          borderRadius: "md",
           placeholder: "添加TODO，按Enter",
           value: inputValue,
           onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -80,7 +81,7 @@ export function createHomeTodoWidget(api: ExtensionFactoryApi) {
                     {
                       w: 4,
                       h: 4,
-                      borderRadius: "sm",
+                      borderRadius: "md",
                       border: "1px solid",
                       borderColor: "gray.400",
                       flexShrink: 0,

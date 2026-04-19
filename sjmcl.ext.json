@@ -1,8 +1,8 @@
 {
-  "identifier": "top.hongbro.todo.list",
+  "identifier": "sjmcl.extension.todo.list",
   "name": "ToDo List",
   "description": "ToDo List",
-  "author": "hongbro",
+  "author": "Hongbro886",
   "version": "0.1.0",
   "minimalLauncherVersion": "0.8.0",
   "frontend": {
