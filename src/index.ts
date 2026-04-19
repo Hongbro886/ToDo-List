@@ -17,15 +17,7 @@ import { createHomeTodoWidget } from "./widgets/home-todo";
   window.registerExtension(factory, token);
 })(function createExtension(api: ExtensionFactoryApi) {
   return {
-    homeWidgets: [
-      {
-        key: "home-todo",
-        title: "TODO",
-        defaultWidth: 320,
-        minWidth: 280,
-        Component: createHomeTodoWidget(api),
-      },
-    ],
+    homeWidgets: createHomeTodoWidget(api).homeWidgets,
     settingsPage: {
       Component: createSettingsPage(api),
     },
