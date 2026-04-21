@@ -12,7 +12,24 @@ export function createSettingsPage(api: ExtensionFactoryApi) {
     const toast = useToast();
 
     function handleExport() {
-      void exportTodoFile(items);
+      try {
+        exportTodoFile(items);
+        toast({
+          title: "导出成功",
+          description: `已导出 ${items.length} 条数据`,
+          status: "success",
+          duration: 3000,
+          position: "bottom-left",
+        });
+      } catch {
+        toast({
+          title: "导出失败",
+          description: "文件导出失败，请重试",
+          status: "error",
+          duration: 3000,
+          position: "bottom-left",
+        });
+      }
     }
 
     function handleImportClick() {
@@ -30,6 +47,7 @@ export function createSettingsPage(api: ExtensionFactoryApi) {
           description: "请选择 JSON 格式文件",
           status: "error",
           duration: 3000,
+          position: "bottom-left",
         });
         if (fileInputRef.current) fileInputRef.current.value = "";
         return;
@@ -47,6 +65,7 @@ export function createSettingsPage(api: ExtensionFactoryApi) {
             description: `已导入 ${parsed.length} 条数据`,
             status: "success",
             duration: 3000,
+            position: "bottom-left",
           });
         } catch {
           toast({
@@ -54,6 +73,7 @@ export function createSettingsPage(api: ExtensionFactoryApi) {
             description: "文件格式错误，无法解析",
             status: "error",
             duration: 3000,
+            position: "bottom-left",
           });
         } finally {
           if (fileInputRef.current) fileInputRef.current.value = "";
@@ -65,6 +85,7 @@ export function createSettingsPage(api: ExtensionFactoryApi) {
           description: "文件读取失败",
           status: "error",
           duration: 3000,
+          position: "bottom-left",
         });
         if (fileInputRef.current) fileInputRef.current.value = "";
       };
