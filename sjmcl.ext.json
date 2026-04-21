@@ -3,7 +3,7 @@
   "name": "ToDo List",
   "description": "ToDo List",
   "author": "Hongbro886",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "minimalLauncherVersion": "0.8.0",
   "frontend": {
     "entry": "frontend/index.js"
