@@ -16,7 +16,7 @@ export function createSettingsPage(api: ExtensionFactoryApi) {
         exportTodoFile(items);
         toast({
           title: "导出成功",
-          description: `已导出 ${items.length} 条数据`,
+          description: `已导出 ${items.length} 条数据到 Downloads 文件夹`,
           status: "success",
           duration: 3000,
           position: "bottom-left",
