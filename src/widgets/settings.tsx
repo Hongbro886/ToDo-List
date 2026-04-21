@@ -8,31 +8,18 @@ export function createSettingsPage(api: ExtensionFactoryApi) {
 
   function SettingsPage() {
     const { items, writeItems } = useTodoItems(api);
-    const fileInputRef = React.useRef<HTMLInputElement>(null);
 
     function handleExport() {
-      exportTodoFile(items);
+      void exportTodoFile(items);
     }
 
-    function handleImportClick() {
-      fileInputRef.current?.click();
-    }
-
-    function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      void importTodoFile(file)
-        .then((imported) => {
-          void writeItems(imported);
-        })
-        .catch(() => {
-          // ignore error
-        })
-        .finally(() => {
-          if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-          }
-        });
+    async function handleImport() {
+      try {
+        const imported = await importTodoFile();
+        void writeItems(imported);
+      } catch {
+        // ignore error
+      }
     }
 
     return React.createElement(
@@ -52,17 +39,10 @@ export function createSettingsPage(api: ExtensionFactoryApi) {
           ),
           React.createElement(
             Button,
-            { size: "sm", onClick: handleImportClick },
+            { size: "sm", onClick: handleImport },
             "导入数据"
           )
-        ),
-        React.createElement("input", {
-          ref: fileInputRef,
-          type: "file",
-          accept: ".json",
-          style: { display: "none" },
-          onChange: handleFileChange,
-        })
+        )
       )
     );
   }
