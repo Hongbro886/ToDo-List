@@ -8,6 +8,7 @@ const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, "..");
 const packagePath = path.join(projectRoot, "package.json");
 const manifestPath = path.join(projectRoot, "sjmcl.ext.json");
+const updatePath = path.join(projectRoot, "update.json");
 
 function readJson(filePath) {
   return JSON.parse(readFileSync(filePath, "utf8"));
@@ -15,6 +16,12 @@ function readJson(filePath) {
 
 function writeJson(filePath, value) {
   writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`);
+}
+
+function updateJsonFile(filePath, updater) {
+  const data = readJson(filePath);
+  const updated = updater(data);
+  writeJson(filePath, updated);
 }
 
 function main() {
@@ -36,6 +43,11 @@ function main() {
 
   writeJson(packagePath, packageJson);
   writeJson(manifestPath, manifest);
+
+  updateJsonFile(updatePath, (update) => ({
+    ...update,
+    latestVersion: nextVersion,
+  }));
 
   console.log(`Version bumped to ${nextVersion}`);
 }

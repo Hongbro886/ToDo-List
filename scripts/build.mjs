@@ -356,6 +356,7 @@ var __dirname = path3.dirname(__filename);
 var projectRoot = path3.resolve(__dirname, "..");
 var manifestPath = path3.join(projectRoot, "sjmcl.ext.json");
 var packagePath = path3.join(projectRoot, "package.json");
+var updatePath = path3.join(projectRoot, "update.json");
 var distRoot = path3.join(projectRoot, "dist");
 function createEsbuildOptions(sourceEntryPath, buildMode, obfuscate) {
   const shouldMinify = buildMode === "production";
@@ -440,6 +441,16 @@ async function main() {
   };
   const archiveBuffer = zipSync(zipTree, { level: 9 });
   writeFileSync(archivePath, Buffer.from(archiveBuffer));
+
+  // 更新 update.json 的版本号
+  try {
+    const updateJson = JSON.parse(readFileSync(updatePath, "utf8"));
+    updateJson.latestVersion = version;
+    writeFileSync(updatePath, `${JSON.stringify(updateJson, null, 2)}\n`);
+  } catch (e) {
+    // update.json 可能不存在，跳过
+  }
+
   console.log("");
   console.log(`Built ${outputDirectory}`);
   console.log(`Packed ${archivePath}`);
